@@ -21,9 +21,9 @@ namespace peliculasApi.Controllers
         }
 
         [HttpGet("{Id:int}")]
-        public ActionResult<Genero> Get(int Id)
+        public async Task<ActionResult<Genero>> Get(int Id)
         {
-            var genero = repositorio.ObtenerPorId(Id);
+            var genero = await repositorio.ObtenerPorId(Id);
             if( genero == null)
             {
                 return NotFound();

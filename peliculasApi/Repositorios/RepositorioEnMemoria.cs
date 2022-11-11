@@ -22,8 +22,10 @@ namespace peliculasApi.Repositorios
             return _generos;
         }
 
-        public Genero ObtenerPorId(int Id)
+        public async Task<Genero> ObtenerPorId(int Id)
         {
+            await Task.Delay(TimeSpan.FromSeconds(1));
+
             return _generos.FirstOrDefault(x => x.Id == Id);
         }
     }
