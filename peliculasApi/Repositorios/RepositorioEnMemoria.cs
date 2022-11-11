@@ -21,5 +21,10 @@ namespace peliculasApi.Repositorios
         {
             return _generos;
         }
+
+        public Genero ObtenerPorId(int Id)
+        {
+            return _generos.FirstOrDefault(x => x.Id == Id);
+        }
     }
 }

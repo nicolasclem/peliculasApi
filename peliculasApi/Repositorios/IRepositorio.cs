@@ -5,5 +5,6 @@ namespace peliculasApi.Repositorios
     public interface IRepositorio
     {
         List<Genero> ObetenerTodosLosGeneros();
+        Genero ObtenerPorId(int Id);
     }
 }

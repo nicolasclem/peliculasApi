@@ -4,8 +4,8 @@ using peliculasApi.Repositorios;
 
 namespace peliculasApi.Controllers
 {
-    [Route("api/generos")]
-    public class GenerosController
+    [Route("api/[controller]")]
+    public class GenerosController: ControllerBase
     {
         private readonly IRepositorio repositorio;
 
@@ -15,9 +15,37 @@ namespace peliculasApi.Controllers
         }
 
         [HttpGet]
-        public List<Genero> Get()
+        public ActionResult<List<Genero>> Get()
         {
             return repositorio.ObetenerTodosLosGeneros();
+        }
+
+        [HttpGet("{Id:int}")]
+        public ActionResult<Genero> Get(int Id)
+        {
+            var genero = repositorio.ObtenerPorId(Id);
+            if( genero == null)
+            {
+                return NotFound();
+            }
+
+            return genero;
+        }
+
+        [HttpPost]
+        public ActionResult Post()
+        {
+            return NoContent();
+        }
+        [HttpPut]
+        public ActionResult Put()
+        {
+            return NoContent();
+        }
+        [HttpDelete]
+        public ActionResult Delete()
+        {
+            return NoContent();
         }
     }
 }
