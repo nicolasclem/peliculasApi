@@ -28,5 +28,11 @@ namespace peliculasApi.Repositorios
 
             return _generos.FirstOrDefault(x => x.Id == Id);
         }
+
+        public void CrearGenero(Genero genero)
+        {
+            genero.Id = _generos.Count() + 1;
+            _generos.Add(genero);   
+        }
     }
 }

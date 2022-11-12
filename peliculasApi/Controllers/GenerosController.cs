@@ -9,24 +9,30 @@ namespace peliculasApi.Controllers
     public class GenerosController: ControllerBase
     {
         private readonly IRepositorio repositorio;
+        private readonly ILogger<GenerosController> logger;
 
-        public GenerosController(IRepositorio repositorio)
+        public GenerosController(IRepositorio repositorio,ILogger<GenerosController>logger)
         {
             this.repositorio = repositorio;
+            this.logger = logger;
         }
 
         [HttpGet]
         public ActionResult<List<Genero>> Get()
         {
+            logger.LogInformation("Vamos a mostrar los generos");
             return repositorio.ObetenerTodosLosGeneros();
         }
 
         [HttpGet("{Id:int}")]
         public async Task<ActionResult<Genero>> Get(int Id)
         {
+
+            logger.LogDebug($"Obteniendo un genero por el id {Id}");
             var genero = await repositorio.ObtenerPorId(Id);
             if( genero == null)
             {
+                logger.LogWarning($"No se encontro el genero con id: {Id}");
                 return NotFound();
             }
 
@@ -36,7 +42,7 @@ namespace peliculasApi.Controllers
         [HttpPost]
         public ActionResult Post([FromBody] Genero genero)
         {
-           
+            repositorio.CrearGenero(genero);
             return NoContent();
         }
         [HttpPut]
