@@ -5,6 +5,7 @@ using peliculasApi.Repositorios;
 namespace peliculasApi.Controllers
 {
     [Route("api/[controller]")]
+    [ApiController]
     public class GenerosController: ControllerBase
     {
         private readonly IRepositorio repositorio;
@@ -33,13 +34,15 @@ namespace peliculasApi.Controllers
         }
 
         [HttpPost]
-        public ActionResult Post()
+        public ActionResult Post([FromBody] Genero genero)
         {
+           
             return NoContent();
         }
         [HttpPut]
-        public ActionResult Put()
+        public ActionResult Put([FromBody] Genero genero)
         {
+           
             return NoContent();
         }
         [HttpDelete]
