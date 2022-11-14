@@ -16,7 +16,7 @@ namespace peliculasApi.Validaciones
             var primeraLetra= value.ToString()[0].ToString();
             if(primeraLetra != primeraLetra.ToUpper())
             {
-                return new ValidationResult("La primera letra debe ser Mayus");
+                return new ValidationResult("La primera letra debe ser Mayusculo desde  back");
             }
 
             return ValidationResult.Success;
