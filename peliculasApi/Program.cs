@@ -5,8 +5,7 @@ using Microsoft.Extensions.Logging;
 using peliculasApi;
 using peliculasApi.ApiBehavior;
 using peliculasApi.Filtros;
-
-
+using peliculasApi.Utilidades;
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
@@ -15,6 +14,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 
 builder.Services.AddAutoMapper(typeof(Program));
+builder.Services.AddTransient<IAlmacenadorArchivos, AlmacenadorAzureStorage>();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer();
 // Add services to the container.
 
@@ -32,7 +32,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name: MyAllowSpecificOrigins,
                       policy =>
                       {
-                          policy.WithOrigins("http://localhost:3000").AllowAnyHeader().AllowAnyMethod(); 
+                          policy.WithOrigins("http://localhost:3000").AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
                                               
                       });
 });
