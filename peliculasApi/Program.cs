@@ -15,10 +15,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddAutoMapper(typeof(Program));
 
-//builder.Services.AddTransient<IAlmacenadorArchivos, AlmacenadorAzureStorage>();
+builder.Services.AddTransient<IAlmacenadorArchivos, AlmacenadorAzureStorage>();
 
-builder.Services.AddTransient<IAlmacenadorArchivos, AlmacenadorArchivosLocal>();
-builder.Services.AddHttpContextAccessor();
+//builder.Services.AddTransient<IAlmacenadorArchivos, AlmacenadorArchivosLocal>();
+//builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer();
 // Add services to the container.
