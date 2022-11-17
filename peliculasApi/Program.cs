@@ -1,7 +1,10 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using NetTopologySuite;
+using NetTopologySuite.Geometries;
 using peliculasApi;
 using peliculasApi.ApiBehavior;
 using peliculasApi.Filtros;
@@ -14,6 +17,16 @@ var builder = WebApplication.CreateBuilder(args);
 
 
 builder.Services.AddAutoMapper(typeof(Program));
+
+builder.Services.AddSingleton(provider =>
+
+    new MapperConfiguration(config =>
+    {
+        var geometryFactory = provider.GetRequiredService<GeometryFactory>();
+        config.AddProfile(new AutoMapperProfiles(geometryFactory));
+
+    }).CreateMapper());
+builder.Services.AddSingleton<GeometryFactory>(NtsGeometryServices.Instance.CreateGeometryFactory(srid: 4326));
 
 builder.Services.AddTransient<IAlmacenadorArchivos, AlmacenadorAzureStorage>();
 
@@ -42,7 +55,10 @@ builder.Services.AddCors(options =>
                       });
 });
 builder.Services.AddDbContext<ApplicationDbContext>(options => 
-options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConection")));
+options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConection"),
+sqlServer=>sqlServer.UseNetTopologySuite()
+));
+
 
 
 
